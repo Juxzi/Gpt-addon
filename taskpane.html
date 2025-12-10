@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>ChatGPT pour Word</title>
+
+  <!-- Office.js obligatoire pour les add-ins -->
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+
+  <!-- Feuille de style externe -->
+  <link rel="stylesheet" href="taskpane.css" />
+</head>
+<body>
+  <div class="wp-root">
+    <header class="wp-header">
+      <div class="wp-header-main">
+        <div class="wp-logo-circle">AI</div>
+        <div>
+          <h1 class="wp-title">ChatGPT pour Word</h1>
+          <p class="wp-subtitle">
+            Améliore, réécris ou traduis ton texte directement depuis Word.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <main class="wp-main">
+      <!-- Clé API -->
+      <section class="wp-section">
+        <h2 class="wp-section-title">1. Clé API OpenAI</h2>
+        <label for="apiKeyInput" class="wp-label">
+          Clé API <span class="wp-label-helper">(stockée uniquement sur cette machine)</span>
+        </label>
+        <div class="wp-input-row">
+          <input
+            id="apiKeyInput"
+            type="password"
+            placeholder="sk-..."
+            class="wp-input"
+          />
+          <button id="saveApiKeyButton" class="wp-btn wp-btn-outline">
+            Sauvegarder
+          </button>
+        </div>
+        <div id="apiKeyStatus" class="wp-helper-text"></div>
+      </section>
+
+      <!-- Texte source -->
+      <section class="wp-section">
+        <h2 class="wp-section-title">2. Texte à traiter</h2>
+        <div class="wp-button-row">
+          <button id="useSelectionButton" class="wp-btn">
+            Utiliser la sélection Word
+          </button>
+          <button id="clearPromptButton" class="wp-btn wp-btn-ghost">
+            Vider
+          </button>
+        </div>
+        <label for="promptTextarea" class="wp-label">
+          Texte / instructions
+        </label>
+        <textarea
+          id="promptTextarea"
+          rows="7"
+          class="wp-textarea"
+          placeholder="Sélectionne un texte dans le document et clique sur “Utiliser la sélection Word”, ou colle/écris ton texte ici."
+        ></textarea>
+      </section>
+
+      <!-- Mode -->
+      <section class="wp-section">
+        <h2 class="wp-section-title">3. Action à appliquer</h2>
+        <label for="modeSelect" class="wp-label">Type d’amélioration</label>
+        <select id="modeSelect" class="wp-select">
+          <option value="rewrite">Réécrire (plus clair et professionnel)</option>
+          <option value="correct">Corriger orthographe et grammaire</option>
+          <option value="summarize">Résumer le texte</option>
+          <option value="translate_en">Traduire en anglais</option>
+          <option value="custom">Prompt personnalisé (je décris moi-même)</option>
+        </select>
+      </section>
+
+      <!-- Envoi -->
+      <section class="wp-section">
+        <h2 class="wp-section-title">4. Envoi à l’IA</h2>
+        <div class="wp-button-row">
+          <button id="sendButton" class="wp-btn wp-btn-primary">
+            Envoyer à ChatGPT
+          </button>
+          <button id="insertAsCommentButton" class="wp-btn wp-btn-ghost">
+            Insérer en commentaire
+          </button>
+        </div>
+      </section>
+
+      <!-- Résultat -->
+      <section class="wp-section">
+        <div class="wp-section-header-inline">
+          <h2 class="wp-section-title">Résultat</h2>
+          <span class="wp-chip" id="modelInfoChip">gpt-4.1-mini</span>
+        </div>
+        <textarea
+          id="resultTextarea"
+          rows="7"
+          class="wp-textarea"
+          placeholder="La réponse de l’IA s’affichera ici avant insertion dans le document."
+        ></textarea>
+        <div class="wp-button-row">
+          <button id="replaceSelectionButton" class="wp-btn">
+            Remplacer la sélection
+          </button>
+          <button id="insertAtCursorButton" class="wp-btn wp-btn-ghost">
+            Insérer au curseur
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wp-footer">
+      <div id="statusArea" class="wp-status-text">
+        Prêt.
+      </div>
+    </footer>
+  </div>
+
+  <!-- Logique de l’add-in -->
+  <script src="taskpane.js"></script>
+</body>
+</html>
